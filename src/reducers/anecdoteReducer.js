@@ -7,20 +7,23 @@ const anecdotesAtStart = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-const getId = () => (100000 * Math.random()).toFixed(0)
+const addId = (state) => {
+  const ids = state.map(a => a.id)
+  console.log(ids);
+  return Math.max(...ids) + 1
+} 
 
-const asObject = (anecdote) => {
+//map function
+const asObject = (anecdote, i) => {
   return {
     content: anecdote,
-    id: getId(),
+    id: i,
     votes: 0
   }
 }
 
-
+//Returns a list
 const initialState = anecdotesAtStart.map(asObject)
-
-console.log(initialState);
 
 const reducer = (state = initialState, action) => {
 
@@ -32,7 +35,8 @@ const reducer = (state = initialState, action) => {
       const anecdoteToChange = state.find(anecdote => anecdote.id === action.id )
       const changedAnecdote = {...anecdoteToChange, votes: anecdoteToChange.votes + 1}
       return state.map(anecdote => anecdote.id !== changedAnecdote.id ? anecdote : changedAnecdote )
-  
+    case 'ADD_ANECDOTE': 
+      return [...state, {...action.data, id: addId(state)}]
     default:
       console.log('state now: ', state)
       console.log('action', action)
@@ -42,11 +46,29 @@ const reducer = (state = initialState, action) => {
 
 }
 
-export const addVote = (id) => {
+//Action Creators
+
+export const dispatchVote = (id) => {
   return {
     type: 'VOTE',
     id: id
   }
 }
+
+export const dispatchAnecdote = (content) => {
+  return {
+    type: 'ADD_ANECDOTE',
+    data: {
+
+      content: content,
+      id: 0,
+      votes: 0
+    }
+  }
+}
+
+//-ac----------------
+
+
 
 export default reducer
