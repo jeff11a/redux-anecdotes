@@ -2,7 +2,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { dispatchVote } from '../reducers/anecdoteReducer'
 
 const Anecdotes = () => {
-    const anecdotes = useSelector(state => state.sort((a, b )=> a.votes - b.votes).reverse())
+    //anecdotes and filter are destructured from the combine state
+    //TODO: FILTER ANECDOTES
+    const anecdotes = useSelector(({anecdotes, filter}) => anecdotes.sort((a, b )=> a.votes - b.votes).reverse())
     const dispatch = useDispatch()
 
     
@@ -16,11 +18,10 @@ const Anecdotes = () => {
                     </div>
                     <div>
                         has {anecdote.votes}
-                        <button style={{width: '100px', padding: '3px', marginLeft: '6px'}} role='button' onClick={() => dispatch(dispatchVote(anecdote.id))}>vote</button>
+                        <button style={{width: '100px', padding: '3px', marginLeft: '6px'}} onClick={() => dispatch(dispatchVote(anecdote.id))}>vote</button>
                     </div>
                 </div>
             )}</div>)
 }
-
 
 export default Anecdotes
