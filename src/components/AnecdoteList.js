@@ -4,7 +4,7 @@ import { dispatchVote } from '../reducers/anecdoteReducer'
 const Anecdotes = () => {
     //anecdotes and filter are destructured from the combine state
     //TODO: FILTER ANECDOTES
-    const anecdotes = useSelector(({anecdotes, filter}) => anecdotes.sort((a, b )=> a.votes - b.votes).reverse())
+    const anecdotes = useSelector(({anecdotes, filter}) => anecdotes.filter(a => a.content.indexOf(filter) > -1).sort((a, b )=> a.votes - b.votes).reverse())
     const dispatch = useDispatch()
 
     

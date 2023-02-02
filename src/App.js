@@ -7,9 +7,10 @@ const App = () => {
   return (
     <div className='container'>
       <h2>Anecdotes</h2>
+      <AnecdoteForm/>
       <Filter/>
       <AnecdoteList/>
-      <AnecdoteForm/>
+      
 
     </div>
   )
