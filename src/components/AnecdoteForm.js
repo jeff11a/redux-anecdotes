@@ -7,7 +7,7 @@ const CreateAnecdote = () => {
     const addAnecdote = (e) => {
         e.preventDefault()
         const content = e.target.anecdote.value
-        dispatch(dispatchAnecdote(content))
+        dispatch(dispatchAnecdote({content: content}))
     } 
 
     return (

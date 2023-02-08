@@ -18,7 +18,7 @@ const Anecdotes = () => {
                     </div>
                     <div>
                         has {anecdote.votes}
-                        <button style={{width: '100px', padding: '3px', marginLeft: '6px'}} onClick={() => dispatch(dispatchVote(anecdote.id))}>vote</button>
+                        <button style={{width: '100px', padding: '3px', marginLeft: '6px'}} onClick={() => dispatch(dispatchVote({id: anecdote.id}))}>vote</button>
                     </div>
                 </div>
             )}</div>)
