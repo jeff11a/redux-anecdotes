@@ -1,9 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { dispatchVote } from '../reducers/anecdoteReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const Anecdotes = () => {
+
+    const dispatchVoteAndNotification = ({id, content}) => {
+        dispatch(dispatchVote({id: id}))
+        const newText = `You voted '${content}'`
+        
+        dispatch(setNotification(newText))    
+        setTimeout(() => {
+            dispatch(setNotification(''))    
+        }, 5000);
+      
+      }
     //anecdotes and filter are destructured from the combine state
-    //TODO: FILTER ANECDOTES
     const anecdotes = useSelector(({anecdotes, filter}) => anecdotes.filter(a => a.content.indexOf(filter) > -1).sort((a, b )=> a.votes - b.votes).reverse())
     const dispatch = useDispatch()
 
@@ -18,7 +29,7 @@ const Anecdotes = () => {
                     </div>
                     <div>
                         has {anecdote.votes}
-                        <button style={{width: '100px', padding: '3px', marginLeft: '6px'}} onClick={() => dispatch(dispatchVote({id: anecdote.id}))}>vote</button>
+                        <button style={{width: '100px', padding: '3px', marginLeft: '6px'}} onClick={() => dispatchVoteAndNotification({id: anecdote.id, content: anecdote.content})}>vote</button>
                     </div>
                 </div>
             )}</div>)

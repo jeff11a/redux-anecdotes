@@ -5,6 +5,7 @@ import store from './store'
 import App from './App'
 import "@picocss/pico";
 
+
 store.subscribe(() => {
   console.log('subs');
   console.log(store.getState());
