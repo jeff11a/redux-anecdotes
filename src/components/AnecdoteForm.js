@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import { dispatchAnecdote } from "../reducers/anecdoteReducer"
-import { setNotification } from "../reducers/notificationReducer"
+import {setNotification} from "../reducers/notificationReducer"
 
 const CreateAnecdote = () => {
     const dispatch = useDispatch()
