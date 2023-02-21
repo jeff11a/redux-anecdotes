@@ -1,12 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import anecdoteService from "../services/anecdote"
 
 const addId = (state) => {
   console.log(state);
   
   const ids = state.length ? state.map(a => a.id) : null
-  console.log(ids);
-  
-  return ids ? Math.max(...ids) + 1 : 0
+  if(!ids) return 0
+
+  const max = Math.max(...ids)
+
+  if(!isNaN(max)) return max + 1
+  else return null
+
 } 
 
 //map function
@@ -25,8 +30,9 @@ const anecdoteReducer = createSlice({name: 'anecdotes', initialState: [], reduce
     const changedAnecdote = {...anecdoteToChange, votes: anecdoteToChange.votes + 1}
     return state.map(anecdote => anecdote.id !== changedAnecdote.id ? anecdote : changedAnecdote )
   },
-  dispatchAnecdote: (state, action) => {
-    return [...state, {...action.payload, id: addId(state), votes: 0}]
+  createAnecdote: (state, action) => {
+    const newA = anecdoteService.create({...action.payload, id: addId(state), votes: 0})
+
   },
   addAnecdotes: (state, action) => {
     console.log(action.payload);
@@ -36,5 +42,5 @@ const anecdoteReducer = createSlice({name: 'anecdotes', initialState: [], reduce
 }})
 
 
-export const {voteAnecdote, dispatchAnecdote, addAnecdotes} = anecdoteReducer.actions
+export const {voteAnecdote, createAnecdote, addAnecdotes} = anecdoteReducer.actions
 export default anecdoteReducer.reducer

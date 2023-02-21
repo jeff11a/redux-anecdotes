@@ -6,13 +6,16 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import anecdoteService from './services/anecdote'
 import { addAnecdotes } from './reducers/anecdoteReducer'
+import { useSelector } from 'react-redux'
 
 
 const App = () => {
+  const addedNotification = useSelector(({notification}) => notification)
+
   const dispatch = useDispatch()
   useEffect(() => {
     anecdoteService.getAll().then(data => dispatch(addAnecdotes(data)))
-  }, [dispatch]);
+  }, [addedNotification]);
 
   return (
     <div className='container'>
