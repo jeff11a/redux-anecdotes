@@ -1,28 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import anecdoteService from "../services/anecdote"
 
-const addId = (state) => {
-  console.log(state);
-  
-  const ids = state.length ? state.map(a => a.id) : null
-  if(!ids) return 0
-
-  const max = Math.max(...ids)
-
-  if(!isNaN(max)) return max + 1
-  else return null
-
-} 
-
-//map function
-// const asObject = (anecdote, i) => {
-//   return {
-//     content: anecdote,
-//     id: i,
-//     votes: 0
-//   }
-// }
-
 const anecdoteReducer = createSlice({name: 'anecdotes', initialState: [], reducers: {
   voteAnecdote: (state, action) => {
     //payload is inferred,  
@@ -30,18 +8,20 @@ const anecdoteReducer = createSlice({name: 'anecdotes', initialState: [], reduce
     const changedAnecdote = {...anecdoteToChange, votes: anecdoteToChange.votes + 1}
     return state.map(anecdote => anecdote.id !== changedAnecdote.id ? anecdote : changedAnecdote )
   },
-  createAnecdote: (state, action) => {
-   anecdoteService.create({...action.payload, id: addId(state), votes: 0})
-
-  },
   addAnecdotes: (state, action) => {
     console.log(action.payload);
     
     return action.payload
+  }, 
+  appendAnecdote: (state, action) => {
+    console.log(action.payload);
+    
+    state.push(action.payload)
   }
 }})
 
 //asynchronous action creators
+//actions must be exported to use here
 export const initializeAnecdotes = () => {
   return async dispatch => {
     const anecdotes = await anecdoteService.getAll()
@@ -49,6 +29,26 @@ export const initializeAnecdotes = () => {
   }
 }
 
+export const createAnecdote = (content) => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.create({...content, votes: 0})
+    dispatch(appendAnecdote(anecdotes))
+  }
+}
+
+export const sendVoteAnecdote = (content) => {
+
+  return async dispatch => {
+    console.log(content);
+    
+    const vote = await anecdoteService.vote(content.id, {...content, votes: content.votes+1})
+    console.log(vote);
+    
+    dispatch(voteAnecdote(content)) 
+    
+  }
+}
+
 //--asynchronous action creators------------------
-export const {voteAnecdote, createAnecdote, addAnecdotes} = anecdoteReducer.actions
+export const {voteAnecdote, addAnecdotes, appendAnecdote} = anecdoteReducer.actions
 export default anecdoteReducer.reducer

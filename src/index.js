@@ -1,4 +1,5 @@
 //votes are broke, add json post
+//6.17 Anecdotes and the backend, step4
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
