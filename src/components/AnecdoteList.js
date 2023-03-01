@@ -8,10 +8,7 @@ const Anecdotes = () => {
         dispatch(sendVoteAnecdote(anecdote))
         const newText = `You voted '${anecdote.content}'`
         
-        dispatch(setNotification(newText))    
-        setTimeout(() => {
-            dispatch(setNotification(''))    
-        }, 5000);
+        dispatch(setNotification(newText, 5))    
       
       }
     //anecdotes and filter are destructured from the combine state

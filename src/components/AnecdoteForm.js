@@ -9,10 +9,7 @@ const CreateAnecdote = () => {
     const changeNotification = (text) => {
         const newText = `You added '${text}'`
         
-        dispatch(setNotification(newText))    
-        setTimeout(() => {
-            dispatch(setNotification(''))    
-        }, 5000);
+        dispatch(setNotification(newText, 5))
       
       }
 
