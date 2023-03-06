@@ -23,9 +23,6 @@ const App = () => {
       <AnecdoteForm/>
       <Filter/>
       <AnecdoteList/>
-      
-
-
     </div>
   )
 }
